@@ -38,7 +38,7 @@
                 <div class="card-body">
 
                     @if(session()->has('delete'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             {{\session()->get('delete')}}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -66,7 +66,11 @@
                                 <td>{{$post->created_at}}</td>
                                 <td>
                                     <a href="{{route('posts.edit',$post->id)}}" class="btn btn-primary btn-sm" role="button" aria-disabled="true">Edit</a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete_post{{$post->id}}">Delete</button>
+                                   <form action="{{route('posts.destroy',$post->id)}}" method="POST" style="display:inline;">
+                                       @csrf
+                                       @method('DELETE')
+                                       <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                   </form>
                                 </td>
                             </tr>
                             @include('posts.destroy')

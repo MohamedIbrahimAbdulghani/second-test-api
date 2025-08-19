@@ -39,7 +39,7 @@ class PostsController extends Controller
             'body' => $request->body,
         ]);
 
-        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+        return redirect()->back()->with('success', 'Post created successfully.');
     }
 
     /**
@@ -53,24 +53,37 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Posts $posts)
+    public function edit(Posts $posts, $id)
     {
-        //
+        $post = Posts::findOrFail($id);
+        return view('posts.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Posts $posts)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+
+        $posts = Posts::findOrFail($id);
+        $posts->update([
+            'title' => $request->title,
+            'body' => $request->body,
+        ]);
+        return redirect()->back()->with('edit', 'Post updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Posts $posts)
+    public function destroy(Posts $posts, $id)
     {
-        //
+        $posts = Posts::findOrFail($id);
+        $posts->delete();
+        return redirect()->back()->with('delete', 'Post deleted successfully.');
     }
 }
