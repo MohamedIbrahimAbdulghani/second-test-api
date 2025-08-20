@@ -16,8 +16,12 @@ class PostsController extends Controller
     }
 
     public function show($id) {
-        $post = Posts::findOrFail($id);
-        return $this->apiResponse($post, 'Success Get Post By Id', 200); // this function called by apiResponseTrait File
+        $post = Posts::find($id);
+        if($post) {
+            return $this->apiResponse($post, 'Success Get Post By Id', 200); // this function called by apiResponseTrait File
+        } else {
+            return $this->apiResponse(null ,'Sorry This Post Is Not Found', 404); // this function called by apiResponseTrait File
+        }
     }
 
 }
