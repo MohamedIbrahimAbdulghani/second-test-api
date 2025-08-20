@@ -1,3 +1,7 @@
+<?php
+use App\Models\Posts;
+
+?>
 <!-- Sidebar Menu -->
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -7,7 +11,7 @@
                 <i class="nav-icon far fa-calendar-alt"></i>
                 <p>
                     Posts
-                    <span class="badge badge-info right">{{\App\Models\Posts::count()}}</span>
+                    <span class="badge badge-info right">{{Posts::count()}}</span>
                 </p>
             </a>
         </li>
