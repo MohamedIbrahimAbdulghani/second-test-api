@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PostResource;
 use App\Models\Posts;
-use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
@@ -12,13 +12,15 @@ class PostsController extends Controller
 
     public function index() {
         $posts = Posts::all();
-        return $this->apiResponse($posts, 'Success, Get All Posts', 200); // this function called by apiResponseTrait File
+        // in this case i used PostResource::collection() function => to return specific fields from the table not all fields form the table ('Posts table')
+        return $this->apiResponse(PostResource::collection($posts), 'Success, Get All Posts', 200); // this function called by apiResponseTrait File
     }
 
     public function show($id) {
         $post = Posts::find($id);
         if($post) {
-            return $this->apiResponse($post, 'Success Get Post By Id', 200); // this function called by apiResponseTrait File
+            // in this case i used PostResource and take object from this because i want returned specific fields from table not all fields from this table ('Posts table')
+            return $this->apiResponse(new PostResource($post), 'Success Get Post By Id', 200); // this function called by apiResponseTrait File
         } else {
             return $this->apiResponse(null ,'Sorry This Post Is Not Found', 404); // this function called by apiResponseTrait File
         }
