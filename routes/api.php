@@ -12,3 +12,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('posts', [ApiPostsController::class, 'index'])->name('api.posts'); // this route to get all posts
 Route::get('post/{id}', [ApiPostsController::class, 'show'])->name('api.getPostById'); // this route to get a post by id
+Route::post('posts', [ApiPostsController::class, 'store'])->name('posts.store'); // this route to added post by postman
