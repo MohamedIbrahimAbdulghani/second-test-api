@@ -44,7 +44,7 @@ class PostsController extends Controller
             'body' => $request->body
         ]);
         if($post) {
-            return $this->apiResponse(new PostResource($post), 'Add New Post Successful !', 201);
+            return $this->apiResponse(new PostResource($post), 'Add New Post Successful !', 200);
         } else {
             return $this->apiResponse(null, "Don't Save This Post", 400);
         }
@@ -76,9 +76,16 @@ class PostsController extends Controller
             return $this->apiResponse(null, 'Found Error, The Post Not Found', 404);
         }
 
+    }
 
-
-
+    public function delete($id) {
+        $post = Posts::find($id);
+        if($post) {
+            $post->delete();
+            return $this->apiResponse(null, 'The Post Deleted', 200);
+        } else {
+            return $this->apiResponse(null, 'This Post Is Not Found!', 404);
+        }
     }
 
 

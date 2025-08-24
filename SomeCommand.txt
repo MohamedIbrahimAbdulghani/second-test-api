@@ -1,0 +1,7 @@
+*-* Website For JWT ( https://jwt-auth.readthedocs.io/en/develop/laravel-installation/ )
+
+
+1- to install JWT
+    => composer require tymon/jwt-auth
+    => php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+    => php artisan jwt:secret
