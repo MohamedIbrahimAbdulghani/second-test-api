@@ -15,8 +15,7 @@ class AuthController extends Controller
     //     $this->middleware('auth:api', ['except' => ['login', 'register']]);
     // }
 
-public function login(Request $request)
-{
+    public function login(Request $request) {
     // نعمل عملية تحقق (Validation) على البيانات اللي جاية من المستخدم
     $validator = Validator::make($request->all(), [
         'email' => 'required|email',     // لازم يكون فيه ايميل وصحيح التنسيق
@@ -45,11 +44,9 @@ public function login(Request $request)
         'expires_in' => auth()->factory()->getTTL() * 60, // وقت انتهاء التوكن بالثواني
         'user' => auth()->user(),                 // بيانات المستخدم اللي سجل الدخول
     ]);
-}
+    }
 
-
-    public function register(Request $request)
-    {
+    public function register(Request $request) {
             $validator = Validator::make($request->all(), [
                 'name'     => 'required|string|max:255',
                 'email'    => 'required|string|email|max:255|unique:users',
@@ -72,29 +69,27 @@ public function login(Request $request)
             return $this->respondWithToken($token);
     }
 
-
-    public function me()
-    {
+    public function me() {
         return response()->json(Auth::guard('api')->user());
     }
 
-    public function logout()
-    {
+    public function logout() {
         Auth::guard('api')->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    public function refresh()
-    {
+    public function refresh() {
         return $this->respondWithToken(Auth::guard('api')->refresh());
     }
 
-    protected function respondWithToken($token)
-    {
+    protected function respondWithToken($token) {
         return response()->json([
             'access_token' => $token,
             'token_type'   => 'bearer',
             'expires_in'   => Auth::guard('api')->factory()->getTTL() * 60
         ]);
     }
+
+
+
 }
